@@ -1,3 +1,6 @@
+target-microservice:
+  uri: http://stub:8080
+
 spring:
   application:
     name: mvc-gateway
@@ -10,3 +13,5 @@ spring:
               uri: ${target-microservice.uri}
               predicates:
                 - Path=/my/microservice/**
+              filters:
+                - StripPrefix=2

@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  stub:
+    build:
+      context: ./stub
+      dockerfile: Dockerfile
+    container_name: stub
+    ports:
+      - "8080:8080"
+
+  mvc-gateway:
+    build:
+      context: ./mvc-gateway
+      dockerfile: Dockerfile
+    container_name: mvc-gateway
+    environment:
+      TARGET_MICROSERVICE_URI: http://stub:8080
+    depends_on:
+      - stub
+    ports:
+      - "8082:8080"
+
+  reactive-gateway:
+    build:
+      context: ./reactive-gateway
+      dockerfile: Dockerfile
+    container_name: reactive-gateway
+    environment:
+      TARGET_MICROSERVICE_URI: http://stub:8080
+    depends_on:
+      - stub
+    ports:
+      - "8081:8081"
+
+  nginx:
+    image: nginx:latest
+    container_name: reverse_proxy
+    depends_on:
+      - stub
+      - mvc-gateway
+      - reactive-gateway
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"

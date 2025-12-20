@@ -1,7 +1,7 @@
 server:
   port: 8081
 target-microservice:
-  uri: http://localhost:8080
+  uri: http://stub:8080
 
 spring:
   application:
@@ -15,3 +15,5 @@ spring:
               uri: ${target-microservice.uri}
               predicates:
                 - Path=/my/microservice/**
+              filters:
+                - StripPrefix=2
