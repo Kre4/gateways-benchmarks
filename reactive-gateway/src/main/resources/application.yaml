@@ -1,0 +1,17 @@
+server:
+  port: 8081
+target-microservice:
+  uri: http://localhost:8080
+
+spring:
+  application:
+    name: reactive-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: target-microservice-route
+              uri: ${target-microservice.uri}
+              predicates:
+                - Path=/my/microservice/**
