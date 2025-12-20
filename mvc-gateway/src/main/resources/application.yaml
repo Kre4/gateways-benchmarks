@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: mvc-gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: target-microservice-route
+              uri: ${target-microservice.uri}
+              predicates:
+                - Path=/my/microservice/**
