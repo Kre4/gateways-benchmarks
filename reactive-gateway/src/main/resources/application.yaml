@@ -17,3 +17,12 @@ spring:
                 - Path=/my/microservice/**
               filters:
                 - StripPrefix=2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - prometheus

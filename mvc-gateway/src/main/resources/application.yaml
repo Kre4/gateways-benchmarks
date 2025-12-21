@@ -12,6 +12,15 @@ spring:
             - id: target-microservice-route
               uri: ${target-microservice.uri}
               predicates:
-                - Path=/my/microservice/**
+                - Path=/my/microservice/** # todo add config without stripping and strip
               filters:
                 - StripPrefix=2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - prometheus
