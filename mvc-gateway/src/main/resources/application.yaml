@@ -4,6 +4,9 @@ target-microservice:
 spring:
   application:
     name: mvc-gateway
+  threads:
+    virtual:
+      enabled: true
   cloud:
     gateway:
       server:
