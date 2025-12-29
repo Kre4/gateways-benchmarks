@@ -11,12 +11,29 @@ spring:
       server:
         webflux:
           routes:
-            - id: target-microservice-route
+            # S1 - Базовое проксирование
+            - id: s1-baseline-proxy
               uri: ${target-microservice.uri}
               predicates:
-                - Path=/my/microservice/**
+                - Path=/api/v1/**
+
+            # S2 - Переписывание пути
+            - id: s2-strip-prefix
+              uri: ${target-microservice.uri}
+              predicates:
+                - Path=/bench/s2/**
               filters:
                 - StripPrefix=2
+
+            # S3 - Модификация запроса
+            - id: s3-headers
+              uri: ${target-microservice.uri}
+              predicates:
+                - Path=/bench/s3/**
+              filters:
+                - StripPrefix=2
+                - RemoveRequestHeader=X-Debug
+                - AddRequestHeader=X-Gateway, reactive-gateway
 
 management:
   endpoints:

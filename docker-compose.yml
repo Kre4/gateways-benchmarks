@@ -43,8 +43,6 @@ services:
     container_name: reverse_proxy
     depends_on:
       - stub
-      - mvc-gateway
-      - reactive-gateway
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
